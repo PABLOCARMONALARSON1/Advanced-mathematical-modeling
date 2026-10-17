@@ -54,6 +54,7 @@ This repository brings **theoretical mathematics to real scientific applications
 
 * 🧠 **[Neural ODEs](./NeuralODEs)** — Continuous-depth neural networks blending differential equations with deep learning.
 * 📡 **[Filtering Problems](./StochasticFilteringProblem)** — Optimal state estimation in stochastic systems using continuous Kalman-Bucy and Particle filters.
+* 🦠 **[Inverse PINNs for Epidemic PDEs](./EDPSIR)** — Recovering spatio-temporal transmission rates in a fourth-order SIR-type reaction–diffusion model with Physics-Informed Neural Networks and mollifier-based derivative layers.
 ---
 
 ## 🛠️ Skills & Tech Stack
