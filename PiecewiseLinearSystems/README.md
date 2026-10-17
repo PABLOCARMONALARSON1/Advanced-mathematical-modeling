@@ -1,3 +1,6 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 # 🔀 Bifurcations of Piecewise Linear Systems
 
 ### Foco–Centro–Limit-Cycle and saddle-node bifurcations in two engineering models: Chua's circuit and the McKean neuron
