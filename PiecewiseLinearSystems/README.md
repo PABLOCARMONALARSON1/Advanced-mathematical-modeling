@@ -87,9 +87,6 @@ separating **two limit cycles**, **one semi-stable cycle** and **none**, accordi
 | Explicit formulas give the bifurcation point and initial conditions without blind search | Formulas (5.10), (6.19), (6.20) are **asymptotic** ($T_L\to0^+$, $m\to0^+$) |
 | All thesis results are checked numerically (periods, multipliers, stability) | Chua's circuit is 3D; the notebook uses the **planar reduction** ($R\to0$, one-breakpoint diode) |
 | Only core MATLAB, no toolboxes | The standard McKean model has $t_L=t_R$, so an **asymmetric version** ($s_R=+1$) is needed to satisfy $t_Lt_R<0$ |
-
-> 💡 While verifying the formulas I found that $a_C=(d_C)_2/D_C$ (Proposition 3.6 writes $(0,1)\cdot d_C$, which is equal only when $D_C=1$) and that the proofs need $t_L+t_R\neq0$.
-
 ---
 
 ## 🛠️ Tech Stack
