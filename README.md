@@ -56,6 +56,7 @@ This repository brings **theoretical mathematics to real scientific applications
 * 📡 **[Filtering Problems](./StochasticFilteringProblem)** — Optimal state estimation in stochastic systems using continuous Kalman-Bucy and Particle filters.
 * 🦠 **[Inverse PINNs for Epidemic PDEs](./EDPSIR)** — Recovering spatio-temporal transmission rates in a fourth-order SIR-type reaction–diffusion model with Physics-Informed Neural Networks and mollifier-based derivative layers.
 * 🔀 **[Piecewise Linear Systems](./PiecewiseLinearSystems)** — Foco–Centro–Limit-Cycle and saddle-node bifurcations in Chua's circuit and the McKean neuron model.
+* 📈 **[Stochastic Optimal Control](./StochasticNumericalControl)** — Merton's optimal portfolio problem solved with the Hamilton-Jacobi-Bellman equation, upwind finite differences and Howard's policy iteration, validated against the closed-form solution.
 ---
 
 ## 🛠️ Skills & Tech Stack
