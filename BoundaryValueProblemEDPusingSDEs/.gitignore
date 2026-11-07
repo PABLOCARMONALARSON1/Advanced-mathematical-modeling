@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# Regenerable FreeFEM++ mesh (the notebooks only need the two .txt files)
+*.msh

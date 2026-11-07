@@ -1,0 +1,75 @@
+// ============================================================================
+// BVPUSC.edp -- Finite element solution (FreeFEM++) of the Dirichlet problem
+// associated with the generator
+//
+//     L u = sum_i b_i(x) du/dx_i + sum_{i,j} a_{ij}(x) d^2u/(dx_i dx_j)
+//
+// with the data used in the notebooks (see 02_validation.ipynb):
+//
+//     a = I (2x2 identity)                 => second-order term = Laplacian(u)
+//     b(x) = (1, 2)                        => constant drift
+//     g(x) = 2*pi^2*sin(pi*x)*sin(pi*y)    => source term,  L u = -g in D
+//     phi(x) = 0                           => Dirichlet condition on dD
+//     D = (-1,1) x (-1,1)
+//
+// Weak form: starting from  L u = -g  <=>  -Delta u - b.grad(u) = g,
+// multiplying by v (with v = 0 on dD) and integrating -Delta u by parts
+// (the boundary term vanishes because v = 0 on dD):
+//
+//     int_D grad(u).grad(v) - int_D (b.grad(u)) v = int_D g v      for all v
+//
+// which is exactly the "solve" block below.
+//
+// USAGE (from this folder):
+//     FreeFem++ BVPUSC.edp
+// OUTPUT (read by 02_validation.ipynb):
+//     fem_solution.txt         u_h on a 7x7 grid of interior points  ("x y u")
+//     fem_solution_field.txt   u_h at every mesh node                 ("x y u")
+//     BVPUSC_mesh.msh         the mesh (not needed by the notebooks)
+// ============================================================================
+
+real bx = 1.0, by = 2.0;                      // drift b = (1, 2)
+func f = 2.0*pi^2*sin(pi*x)*sin(pi*y);        // source g(x,y)
+
+// --- Mesh of the square [-1,1] x [-1,1] ------------------------------------
+int n = 60;                                   // subdivisions per side
+mesh Th = square(n, n, [-1+2*x, -1+2*y]);     // boundary labels: 1,2,3,4
+
+fespace Vh(Th, P1);
+Vh u, v;
+
+// --- Variational problem (homogeneous Dirichlet condition on all of dD) -----
+solve BVP(u, v) =
+      int2d(Th)( dx(u)*dx(v) + dy(u)*dy(v) )   // Laplacian(u) . v  (by parts)
+    - int2d(Th)( (bx*dx(u) + by*dy(u))*v )     // - b.grad(u) . v
+    - int2d(Th)( f*v )                         // - g . v  (right-hand side)
+    + on(1, 2, 3, 4, u = 0);                   // phi = 0 on dD
+
+// --- Save the solution for post-processing ----------------------------------
+savemesh(Th, "BVPUSC_mesh.msh");
+{
+    ofstream fu("fem_solution_field.txt");
+    fu.precision(12);
+    for (int k = 0; k < Vh.ndof; k++)
+        fu << Th(k).x << " " << Th(k).y << " " << u[][k] << endl;
+}
+
+// --- Evaluate the solution on a grid of interior points ---------------------
+// (the notebooks compare the Monte Carlo (Feynman-Kac) estimates against
+// these values)
+int nGrid = 7;
+real margin = 0.15;
+real lo = -1.0 + margin, hi = 1.0 - margin;
+
+ofstream file("fem_solution.txt");
+file.precision(12);
+for (int i = 0; i < nGrid; i++) {
+    real px = lo + i*(hi - lo)/(nGrid - 1);
+    for (int j = 0; j < nGrid; j++) {
+        real py = lo + j*(hi - lo)/(nGrid - 1);
+        real val = u(px, py);
+        file << px << " " << py << " " << val << endl;
+    }
+}
+
+cout << "FEM solution written to fem_solution.txt (" << nGrid*nGrid << " points)" << endl;
